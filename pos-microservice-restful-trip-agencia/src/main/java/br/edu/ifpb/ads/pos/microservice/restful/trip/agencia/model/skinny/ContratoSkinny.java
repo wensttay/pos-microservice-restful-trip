@@ -2,6 +2,8 @@ package br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.model.skinny;
 
 import br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.model.Contrato;
 import br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.service.consumer.ClienteConsumer;
+import br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.service.consumer.HotelReservaConsumer;
+import br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.service.consumer.PassagemReservaConsumer;
 import java.io.Serializable;
 import javax.ws.rs.core.UriInfo;
 
@@ -15,16 +17,24 @@ public class ContratoSkinny implements Serializable {
     private int id;
     private SkinnyRef cliente;
     private PacoteSkinny pacote;
+    private SkinnyRef hotelReserva;
+    private SkinnyRef passagemReserva;
 
     public ContratoSkinny() {
         cliente = new SkinnyRef();
         pacote = new PacoteSkinny();
+        hotelReserva = new SkinnyRef();
+        passagemReserva = new SkinnyRef();
     }
 
-    public ContratoSkinny(int id, SkinnyRef cliente, PacoteSkinny pacote) {
+    public ContratoSkinny(int id, SkinnyRef cliente, PacoteSkinny pacote,
+            SkinnyRef hotelReserva, SkinnyRef passagemReserva) {
+        
         this.id = id;
         this.cliente = cliente;
         this.pacote = pacote;
+        this.hotelReserva = hotelReserva;
+        this.passagemReserva = passagemReserva;
     }
 
     public static ContratoSkinny valueOf(Contrato contrato, UriInfo uriInfo) throws Exception {
@@ -33,8 +43,22 @@ public class ContratoSkinny implements Serializable {
 
         PacoteSkinny pacoteSkinny = PacoteSkinny
                 .valueOf(contrato.getPacote(), uriInfo);
-
-        return new ContratoSkinny(contrato.getId(), clienteSkinnyRef, pacoteSkinny);
+        
+        SkinnyRef hotelSkinnyRef
+                = new SkinnyRef(String.valueOf(contrato.getHotelReservaId()),
+                        new HotelReservaConsumer()
+                                .getUri(contrato.getHotelReservaId(), uriInfo));
+        
+        SkinnyRef passagemSkinnyRef
+                = new SkinnyRef(String.valueOf(contrato.getPassagemReservaId()),
+                        new PassagemReservaConsumer()
+                                .getUri(contrato.getPassagemReservaId(), uriInfo));
+        
+        return new ContratoSkinny(contrato.getId(),
+                clienteSkinnyRef,
+                pacoteSkinny,
+                hotelSkinnyRef,
+                passagemSkinnyRef);
     }
 
     public int getId() {
@@ -61,9 +85,25 @@ public class ContratoSkinny implements Serializable {
         this.pacote = pacote;
     }
 
+    public SkinnyRef getHotelReserva() {
+        return hotelReserva;
+    }
+
+    public void setHotelReserva(SkinnyRef hotelReserva) {
+        this.hotelReserva = hotelReserva;
+    }
+
+    public SkinnyRef getPassagemReserva() {
+        return passagemReserva;
+    }
+
+    public void setPassagemReserva(SkinnyRef passagemReserva) {
+        this.passagemReserva = passagemReserva;
+    }
+
     @Override
     public String toString() {
-        return "ContratoSkinny{" + "id=" + id + ", cliente=" + cliente + ", pacote=" + pacote + '}';
+        return "ContratoSkinny{" + "id=" + id + ", cliente=" + cliente + ", pacote=" + pacote + ", hotelReserva=" + hotelReserva + ", passagemReserva=" + passagemReserva + '}';
     }
 
 }

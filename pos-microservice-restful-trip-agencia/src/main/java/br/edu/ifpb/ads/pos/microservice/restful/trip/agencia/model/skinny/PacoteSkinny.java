@@ -6,6 +6,7 @@ import br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.service.consumer.Ho
 import br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.model.Pacote;
 import br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.service.consumer.VooConsumer;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import javax.ws.rs.core.UriInfo;
 
 /**
@@ -22,7 +23,8 @@ public class PacoteSkinny implements Serializable {
     private SkinnyRef quarto;
     private SkinnyRef voo;
     private SkinnyRef passagem;
-    
+    private String inico;
+    private String termino;
 
     public PacoteSkinny() {
         hotel = new SkinnyRef();
@@ -31,7 +33,7 @@ public class PacoteSkinny implements Serializable {
         passagem = new SkinnyRef();
     }
 
-    public PacoteSkinny(int id, String nome, Double precoTotal, SkinnyRef hotel, SkinnyRef quarto, SkinnyRef voo, SkinnyRef passagem) {
+    public PacoteSkinny(int id, String nome, Double precoTotal, SkinnyRef hotel, SkinnyRef quarto, SkinnyRef voo, SkinnyRef passagem, String inico, String termino) {
         this.id = id;
         this.nome = nome;
         this.precoTotal = precoTotal;
@@ -39,10 +41,12 @@ public class PacoteSkinny implements Serializable {
         this.quarto = quarto;
         this.voo = voo;
         this.passagem = passagem;
+        this.inico = inico;
+        this.termino = termino;
     }
 
     public static PacoteSkinny valueOf(Pacote pacote, UriInfo uriInfo) throws Exception {
-        
+
         HotelConsumer hotelConsumer = new HotelConsumer();
         QuartoConsumer quartoConsumer = new QuartoConsumer();
         VooConsumer vooConsumer = new VooConsumer();
@@ -55,6 +59,11 @@ public class PacoteSkinny implements Serializable {
             throw new Exception();
         }
 
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+        String inicio = format.format(pacote.getInicio());
+        String termino = format.format(pacote.getTermino());
+
         SkinnyRef hotel = new SkinnyRef(String.valueOf(pacote.getHotelId()),
                 hotelConsumer.getUri(pacote.getHotelId(), uriInfo));
 
@@ -63,12 +72,13 @@ public class PacoteSkinny implements Serializable {
 
         SkinnyRef voo = new SkinnyRef(String.valueOf(pacote.getVooId()),
                 vooConsumer.getUri(pacote.getVooId(), uriInfo));
-        
+
         SkinnyRef passagem = new SkinnyRef(String.valueOf(pacote.getPassagemId()),
                 passagemConsumer.getUri(pacote.getPassagemId(), uriInfo));
 
         return new PacoteSkinny(pacote.getId(), pacote.getNome(),
-                pacote.getPrecoTotal(), hotel, quarto, voo, passagem);
+                pacote.getPrecoTotal(), hotel, quarto, voo, passagem, inicio,
+                termino);
 
     }
 
@@ -128,10 +138,25 @@ public class PacoteSkinny implements Serializable {
         this.passagem = passagem;
     }
 
+    public String getInico() {
+        return inico;
+    }
+
+    public void setInico(String inico) {
+        this.inico = inico;
+    }
+
+    public String getTermino() {
+        return termino;
+    }
+
+    public void setTermino(String termino) {
+        this.termino = termino;
+    }
+
     @Override
     public String toString() {
         return "PacoteSkinny{" + "id=" + id + ", nome=" + nome + ", precoTotal=" + precoTotal + ", hotel=" + hotel + ", quarto=" + quarto + ", voo=" + voo + ", passagem=" + passagem + '}';
     }
-
 
 }

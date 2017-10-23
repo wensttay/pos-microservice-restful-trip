@@ -1,6 +1,7 @@
 package br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,11 +36,15 @@ public class Pacote implements Serializable {
     private int vooId;
     @Column(nullable = false)
     private int passagemId;
+    private Date inicio;
+    private Date termino;
 
     public Pacote() {
+        inicio = new Date();
+        termino = new Date();
     }
 
-    public Pacote(int id, String nome, Double precoTotal, int hotelId, int quartoId, int vooId, int passagemId) {
+    public Pacote(int id, String nome, Double precoTotal, int hotelId, int quartoId, int vooId, int passagemId, Date inicio, Date termino) {
         this.id = id;
         this.nome = nome;
         this.precoTotal = precoTotal;
@@ -47,10 +52,10 @@ public class Pacote implements Serializable {
         this.quartoId = quartoId;
         this.vooId = vooId;
         this.passagemId = passagemId;
+        this.inicio = inicio;
+        this.termino = termino;
     }
 
-   
- 
     public int getId() {
         return id;
     }
@@ -107,10 +112,25 @@ public class Pacote implements Serializable {
         this.passagemId = passagemId;
     }
 
-    @Override
-    public String toString() {
-        return "Pacote{" + "id=" + id + ", nome=" + nome + ", precoTotal=" + precoTotal + ", hotelId=" + hotelId + ", quartoId=" + quartoId + ", vooId=" + vooId + ", passagemId=" + passagemId + '}';
+    public Date getInicio() {
+        return inicio;
     }
 
-    
+    public void setInicio(Date inicio) {
+        this.inicio = inicio;
+    }
+
+    public Date getTermino() {
+        return termino;
+    }
+
+    public void setTermino(Date termino) {
+        this.termino = termino;
+    }
+
+    @Override
+    public String toString() {
+        return "Pacote{" + "id=" + id + ", nome=" + nome + ", precoTotal=" + precoTotal + ", hotelId=" + hotelId + ", quartoId=" + quartoId + ", vooId=" + vooId + ", passagemId=" + passagemId + ", inicio=" + inicio + ", termino=" + termino + '}';
+    }
+
 }

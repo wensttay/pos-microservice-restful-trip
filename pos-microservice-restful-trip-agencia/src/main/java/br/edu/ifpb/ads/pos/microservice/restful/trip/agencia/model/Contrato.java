@@ -1,6 +1,7 @@
 package br.edu.ifpb.ads.pos.microservice.restful.trip.agencia.model;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,10 @@ public class Contrato implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
     private String clienteCpf;
+    @Column(nullable = false)
+    private int hotelReservaId;
+    @Column(nullable = false)
+    private int passagemReservaId;
 
     @ManyToOne
     @JoinColumn(nullable = false, name = "pacote_id")
@@ -47,14 +52,6 @@ public class Contrato implements Serializable {
         this.id = id;
     }
 
-    public Pacote getPacote() {
-        return pacote;
-    }
-
-    public void setPacote(Pacote pacote) {
-        this.pacote = pacote;
-    }
-
     public String getClienteCpf() {
         return clienteCpf;
     }
@@ -63,9 +60,33 @@ public class Contrato implements Serializable {
         this.clienteCpf = clienteCpf;
     }
 
+    public int getHotelReservaId() {
+        return hotelReservaId;
+    }
+
+    public void setHotelReservaId(int hotelReservaId) {
+        this.hotelReservaId = hotelReservaId;
+    }
+
+    public int getPassagemReservaId() {
+        return passagemReservaId;
+    }
+
+    public void setPassagemReservaId(int passagemReservaId) {
+        this.passagemReservaId = passagemReservaId;
+    }
+
+    public Pacote getPacote() {
+        return pacote;
+    }
+
+    public void setPacote(Pacote pacote) {
+        this.pacote = pacote;
+    }
+
     @Override
     public String toString() {
-        return "Contrato{" + "id=" + id + ", cpf=" + clienteCpf + ", pacote=" + pacote + '}';
+        return "Contrato{" + "id=" + id + ", clienteCpf=" + clienteCpf + ", hotelReservaId=" + hotelReservaId + ", passagemReservaId=" + passagemReservaId + ", pacote=" + pacote + '}';
     }
 
 }

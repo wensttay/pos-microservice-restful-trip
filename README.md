@@ -48,4 +48,4 @@ Here are the links to "import" the commands:
 - pos-microservice-restful-trip-passagem: 
 	https://www.getpostman.com/collections/f04e96f976dc3f6a7dad
 - pos-microservice-restful-trip-agencia:
-	https://www.getpostman.com/collections/cfb638c30bca329d5e1e
+	https://www.getpostman.com/collections/1885f0bc26c52f124da1
