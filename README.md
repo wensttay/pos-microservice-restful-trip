@@ -33,5 +33,19 @@ http://localhost:8084/pos-microservice-restful-trip-agencia/api/contratos/
 http://localhost:8084/pos-microservice-restful-trip-agencia/api/pacotes/
 
 Ps:
-- Shutdown: $ sh down.sh
-- Restart: $ sh restart.sh
+
+Shutdown: 
+	$ sh down.sh
+- Restart: 
+	$ sh restart.sh
+
+If you use postman, I make all most of possibilities of requests for this projets.
+Here are the links to "import" the commands:
+- pos-microservice-restful-trip-cliente: 
+	https://www.getpostman.com/collections/1885f0bc26c52f124da1
+- pos-microservice-restful-trip-hotel: 
+	https://www.getpostman.com/collections/ed72060cda459bde6107
+- pos-microservice-restful-trip-passagem: 
+	https://www.getpostman.com/collections/f04e96f976dc3f6a7dad
+- pos-microservice-restful-trip-agencia:
+	https://www.getpostman.com/collections/cfb638c30bca329d5e1e
