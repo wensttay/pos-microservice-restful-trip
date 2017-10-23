@@ -1,0 +1,77 @@
+version: "2"
+
+services:
+  restful-trip-cliente-db:
+    container_name: restful-trip-cliente-db-postgres
+    build: ./pos-microservice-restful-trip-cliente/database/
+    image: restful-trip-cliente-db-postgres
+    volumes:
+      - restful-trip-cliente-db-postgres-volume:/var/1ib/postgresql/data/
+  restful-trip-cliente-api: 
+    container_name: restful-trip-cliente-api-payara
+    build: ./pos-microservice-restful-trip-cliente/
+    image: restful-trip-cliente-api-payara
+    ports:
+      - "8081:8080"
+    links:
+      - "restful-trip-cliente-db:restful-trip-cliente-db"
+
+  restful-trip-hotel-db:
+    container_name: restful-trip-hotel-db-postgres
+    build: ./pos-microservice-restful-trip-hotel/database/
+    image: restful-trip-hotel-db-postgres
+    volumes:
+      - restful-trip-hotel-db-postgres-volume:/var/1ib/postgresql/data/
+  restful-trip-hotel-api: 
+    container_name: restful-trip-hotel-api-payara
+    build: ./pos-microservice-restful-trip-hotel/
+    image: restful-trip-hotel-api-payara
+    ports:
+      - "8082:8080"
+    links:
+      - "restful-trip-hotel-db:restful-trip-hotel-db"
+      - "restful-trip-cliente-api:restful-trip-cliente-api"
+
+  restful-trip-passagem-db:
+    container_name: restful-trip-passagem-db-postgres
+    build: ./pos-microservice-restful-trip-passagem/database/
+    image: restful-trip-passagem-db-postgres
+    volumes:
+      - restful-trip-passagem-db-postgres-volume:/var/1ib/postgresql/data/
+  restful-trip-passagem-api: 
+    container_name: restful-trip-passagem-api-payara
+    build: ./pos-microservice-restful-trip-passagem/
+    image: restful-trip-passagem-api-payara
+    ports:
+      - "8083:8080"
+    links:
+      - "restful-trip-passagem-db:restful-trip-passagem-db"
+      - "restful-trip-cliente-api:restful-trip-cliente-api"
+
+  restful-trip-agencia-db:
+    container_name: restful-trip-agencia-db-postgres
+    build: ./pos-microservice-restful-trip-agencia/database/
+    image: restful-trip-agencia-db-postgres
+    volumes:
+      - restful-trip-agencia-db-postgres-volume:/var/1ib/postgresql/data/
+  restful-trip-agencia-api: 
+    container_name: restful-trip-agencia-api-payara
+    build: ./pos-microservice-restful-trip-agencia/
+    image: restful-trip-agencia-api-payara
+    ports:
+      - "8084:8080"
+    links:
+      - "restful-trip-agencia-db:restful-trip-agencia-db"
+      - "restful-trip-cliente-api:restful-trip-cliente-api"
+      - "restful-trip-hotel-api:restful-trip-hotel-api"
+      - "restful-trip-passagem-api:restful-trip-passagem-api"
+
+volumes:
+  restful-trip-cliente-db-postgres-volume:
+    driver: local
+  restful-trip-hotel-db-postgres-volume:
+    driver: local
+  restful-trip-passagem-db-postgres-volume:
+    driver: local
+  restful-trip-agencia-db-postgres-volume:
+    driver: local
