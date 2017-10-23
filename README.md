@@ -40,7 +40,7 @@ Shutdown Command:
 Restart Command: 
  - $ sh restart.sh
 
-If you use postman, I make all most of possibilities of requests for this projets.
+If you use postman, I made all most of possibilities of requests for this projets.
 Here are the links to "import" the commands:
 
 <b>pos-microservice-restful-trip-cliente: </b>
